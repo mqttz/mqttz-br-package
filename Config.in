@@ -1,5 +1,5 @@
 config BR2_PACKAGE_MQTTZ
-	bool "mosquitto"
+	bool "mqttz"
 	depends on BR2_USE_MMU # fork()
 	depends on BR2_TOOLCHAIN_HAS_SYNC_4
 	depends on !BR2_STATIC_LIBS # builds .so
