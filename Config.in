@@ -1,5 +1,5 @@
 config BR2_PACKAGE_MQTTZ
-	bool "mosquitto"
+	bool "mqttz"
 	depends on BR2_USE_MMU # fork()
 	depends on BR2_TOOLCHAIN_HAS_SYNC_4
 	depends on !BR2_STATIC_LIBS # builds .so
@@ -14,7 +14,16 @@ config BR2_PACKAGE_MQTTZ
 
 	  http://mosquitto.org/
 
+config BR2_PACKAGE_MQTTZ_BROKER
+	bool "install the mqttz broker"
+	default y
+	depends on BR2_USE_MMU # fork()
+	depends on BR2_PACKAGE_MQTTZ
+	help
+	  Build and install the mosquitto broker onto target.
+
+comment "mosquitto broker needs a system with MMU"
+	depends on BR2_PACKAGE_MOSQUTTO && !BR2_USE_MMU
+
 comment "mosquitto needs a toolchain w/ dynamic library"
-	depends on BR2_USE_MMU
-	depends on BR2_TOOLCHAIN_HAS_SYNC_4
 	depends on BR2_STATIC_LIBS
