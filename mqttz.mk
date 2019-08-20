@@ -4,6 +4,7 @@
 #
 ################################################################################
 
+#MQTTZ_VERSION = 1.0.0
 MQTTZ_SITE = /home/csegarra/Work/CSEM/MQT-TZ/mosquitto
 MQTTZ_SITE_METHOD = local
 MQTTZ_INSTALL_STAGING = YES
@@ -83,28 +84,28 @@ endef
 define MQTTZ_INSTALL_TARGET_CMDS
 	$(MAKE) -C $(@D) $(TARGET_CONFIGURE_OPTS) DIRS="$(MQTTZ_MAKE_DIRS)" \
 		$(MQTTZ_MAKE_OPTS) DESTDIR=$(TARGET_DIR) install
-	rm -f $(TARGET_DIR)/etc/mosquitto/*.example
-	$(INSTALL) -D -m 0644 $(@D)/mosquitto-s.conf \
-		$(TARGET_DIR)/etc/mosquitto/mosquitto-s.conf
+	rm -f $(TARGET_DIR)/etc/mqttz/*.example
+	$(INSTALL) -D -m 0644 $(@D)/mosquitto_s.conf \
+		$(TARGET_DIR)/etc/mqttz/mosquitto_s.conf
 endef
 
-ifeq ($(BR2_PACKAGE_MQTTZ_BROKER),y)
-define MQTTZ_INSTALL_INIT_SYSV
-	$(INSTALL) -D -m 0755 package/mosquitto/S50mosquitto \
-		$(TARGET_DIR)/etc/init.d/S50mosquitto
-endef
-
-define MQTTZ_INSTALL_INIT_SYSTEMD
-	$(INSTALL) -D -m 644 package/mosquitto/mosquitto.service \
-		$(TARGET_DIR)/usr/lib/systemd/system/mosquitto.service
-	mkdir -p $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants
-	ln -fs ../../../../usr/lib/systemd/system/mosquitto.service \
-		$(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/mosquitto.service
-endef
-
-define MQTTZ_USERS
-	mosquitto -1 nogroup -1 * - - - Mosquitto user
-endef
-endif
+#ifeq ($(BR2_PACKAGE_MQTTZ_BROKER),y)
+#define MQTTZ_INSTALL_INIT_SYSV
+#	$(INSTALL) -D -m 0755 package/mqttz/S50mosquitto \
+#		$(TARGET_DIR)/etc/init.d/S50mosquitto
+#endef
+#
+#define MQTTZ_INSTALL_INIT_SYSTEMD
+#	$(INSTALL) -D -m 644 package/mosquitto/mosquitto.service \
+#		$(TARGET_DIR)/usr/lib/systemd/system/mosquitto.service
+#	mkdir -p $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants
+#	ln -fs ../../../../usr/lib/systemd/system/mosquitto.service \
+#		$(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/mosquitto.service
+#endef
+#
+#define MQTTZ_USERS
+#	mosquitto -1 nogroup -1 * - - - Mosquitto user
+#endef
+#endif
 
 $(eval $(generic-package))
