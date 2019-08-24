@@ -107,9 +107,10 @@ ifeq ($(BR2_PACKAGE_MQTTZ_BROKER),y)
 #		$(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/mosquitto.service
 #endef
 #
-define MQTTZ_USERS
-	mosquitto -1 nogroup -1 * - - - Mosquitto user
-endef
+# FIXME ??
+#define MQTTZ_USERS
+#	mosquitto -1 nogroup -1 * - - - Mosquitto user
+#endef
 endif
 
 $(eval $(generic-package))
